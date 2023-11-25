@@ -1,4 +1,4 @@
-package courier_test;
+package courier.test;
 
 import client.CourierClient;
 import data.CourierCredentials;
@@ -62,9 +62,11 @@ public class LoginCourierTest {
         CourierCredentials courierCredentials = new CourierCredentials(courier.getLogin(),courier.getPassword());
         ValidatableResponse response = courierClient.loginCourier(courierCredentials);
 
-        response.assertThat().body("id", notNullValue())
+        response.assertThat()
+                .statusCode(SC_OK)
                 .and()
-                .statusCode(SC_OK);
+                .body("id", notNullValue());
+
 
     }
 
@@ -77,9 +79,11 @@ public class LoginCourierTest {
         ValidatableResponse response = courierClient.loginCourier(courierCredentials);
 
         response.assertThat()
-                .body("message", equalTo("Недостаточно данных для входа"))
+                .statusCode(SC_BAD_REQUEST)
                 .and()
-                .statusCode(SC_BAD_REQUEST);
+                .body("message", equalTo("Недостаточно данных для входа"));
+
+
 
     }
 
@@ -91,9 +95,11 @@ public class LoginCourierTest {
         CourierCredentials courierCredentials = new CourierCredentials(courier.getLogin(),"");
         ValidatableResponse response = courierClient.loginCourier(courierCredentials);
         response.assertThat()
-                .body("message", equalTo("Недостаточно данных для входа"))
+                .statusCode(SC_BAD_REQUEST)
                 .and()
-                .statusCode(SC_BAD_REQUEST);
+                .body("message", equalTo("Недостаточно данных для входа"));
+
+
     }
 
     @Test
@@ -104,9 +110,11 @@ public class LoginCourierTest {
         CourierCredentials courierCredentials = new CourierCredentials("Fdrrt134543vdfgsddfg",courier.getPassword());
         ValidatableResponse response = courierClient.loginCourier(courierCredentials);
         response.assertThat()
-                .body("message", equalTo("Учетная запись не найдена"))
+                .statusCode(SC_NOT_FOUND)
                 .and()
-                .statusCode(SC_NOT_FOUND);
+                .body("message", equalTo("Учетная запись не найдена"));
+
+
     }
 
     @Test
@@ -117,9 +125,10 @@ public class LoginCourierTest {
         CourierCredentials courierCredentials = new CourierCredentials(courier.getPassword(),"4534tfgfgd");
         ValidatableResponse response = courierClient.loginCourier(courierCredentials);
         response.assertThat()
-                .body("message", equalTo("Учетная запись не найдена"))
+                .statusCode(SC_NOT_FOUND)
                 .and()
-                .statusCode(SC_NOT_FOUND);
+                .body("message", equalTo("Учетная запись не найдена"));
+
     }
 
     @Test
@@ -130,8 +139,9 @@ public class LoginCourierTest {
         CourierCredentials courierCredentials = new CourierCredentials("Gfgvfrrtyrthf","4534tfgfgd");
         ValidatableResponse response = courierClient.loginCourier(courierCredentials);
         response.assertThat()
-                .body("message", equalTo("Учетная запись не найдена"))
+                .statusCode(SC_NOT_FOUND)
                 .and()
-                .statusCode(SC_NOT_FOUND);
+                .body("message", equalTo("Учетная запись не найдена"));
+
     }
 }

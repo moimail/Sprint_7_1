@@ -1,4 +1,4 @@
-package courier_test;
+package courier.test;
 
 import client.CourierClient;
 import data.CourierCredentials;
