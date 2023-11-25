@@ -43,7 +43,10 @@ public class CreateOrderTest {
         ValidatableResponse response = orderClient.createOrderTest(order);
          response
 
-                .assertThat().body("track", Matchers.notNullValue()).and().statusCode(201);
+                .assertThat()
+                 .statusCode(201)
+                 .and()
+                 .body("track", Matchers.notNullValue());
     }
 
 }
