@@ -3,6 +3,7 @@ package client;
 import data.CourierCredentials;
 import data.CourierData;
 import data.DeleteCourier;
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import static io.restassured.RestAssured.given;
 
@@ -14,6 +15,7 @@ public class CourierClient extends RestClient {
     private static final String DELETE_PATH = "api/v1/courier/";
 
 
+    @Step("Создание курьера")
     public ValidatableResponse createCourier(CourierData courier) {
         return given()
                 .spec(requestSpecification())
@@ -25,6 +27,7 @@ public class CourierClient extends RestClient {
 
     }
 
+    @Step("Логин курьера в систему")
     public ValidatableResponse loginCourier(CourierCredentials courierCredentials) {
         return given()
                 .spec(requestSpecification())
@@ -37,7 +40,9 @@ public class CourierClient extends RestClient {
 
     }
 
+
     //delete
+    @Step("Удаление созданного куоьера")
     public ValidatableResponse deleteCourier(int Id) {
         //удаление
         DeleteCourier deleteCourier = new DeleteCourier(String.valueOf(Id));
